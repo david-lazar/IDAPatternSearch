@@ -25,7 +25,7 @@ Target addresses can be specified in two non-exclusive ways using a python dicti
 1. Address range(s) - either a tuple or a list of tuples specifying a start address and an exclusive end address, passed in the address_ranges argument. Passing an empty list would result in including NO addresses.
 
     For example:
-    ```json
+    ```python
     {"address_ranges":[(0, 0x1000), (0xFFFF0000, 0xFFFFFFFF)]}
     {"address_ranges":(0, 0xFFFFFFFF)}
     ```
@@ -33,14 +33,14 @@ Target addresses can be specified in two non-exclusive ways using a python dicti
 2. Segment name(s) - either a segment name or a list of segment names, passed in the segment's argument. Passing an empty list would include all arguments in the IDB.
 
     For example:
-    ```json
+    ```python
     {"segments":[".text", ".bss"]}
     {"segments":".text"}
     {"segments":[]}
     ```
 
 * You can also include both, for example:
-    ```json
+    ```python
     {"address_ranges":(0x0, 0xFFFFFFFF),"segments":[".text"]}
     ```
 
