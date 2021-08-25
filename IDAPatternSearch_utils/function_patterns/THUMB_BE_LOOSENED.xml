@@ -1,0 +1,26 @@
+  <!-- Loosened patterns, but MUST come after a function --> <!-- Added some pre patterns from not loosened-->
+  <patternpairs totalbits="16" postbits="8"> <!-- 16 bit Thumb -->
+    <prepatterns>
+      <data>0xbd .......0                </data> <!-- pop -->
+      <data>0xbd .......0  0x0000        </data> <!-- pop , filler -->
+      <data>0xbd .......0  0xbf00        </data> <!-- pop , filler -->
+      <data>0xbd .......0  0x46c0        </data> <!-- pop , filler -->
+      <data>0xffff                      </data> <!-- filler -->
+      <data>0x46c0                      </data> <!-- filler??? -->
+      <data>0x4770                      </data> <!-- bxlr -->
+      <data>0x4770 0x0000               </data> <!-- bxlr, filler -->
+      <data>0x4770 0x46c0               </data> <!-- bxlr, filler -->
+      <data>0xb0 000.....  0xbd ....0000 </data> <!-- add, pop -->
+      <data> 0x00bf                     </data> <!-- nop -->
+      <data> 0x8000f3af                 </data> <!-- nop.w -->
+      <data> 0xe8bd 1....... ........   </data> <!-- pop { rlist, pc } -->
+      <data> 0xf746                     </data> <!-- mov pc,lr -->
+      <data> 0xf8 0x5d 0xfb 0.......    </data> <!-- ldr.w pc,[sp],#0x.. -->
+    </prepatterns>   
+    <postpatterns>
+      <data> 0xb5 .......0                </data> <!-- push-->
+      <align mark="0" bits="1"/>
+      <setcontext name="TMode" value="1"/>
+      <funcstart after="function"/>
+    </postpatterns>
+  </patternpairs>

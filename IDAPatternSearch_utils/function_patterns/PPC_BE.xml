@@ -1,0 +1,48 @@
+<patternlist>
+  <patternpairs totalbits="32" postbits="16">
+    <prepatterns>
+      <data>0x4e800020 </data> <!-- BLR -->
+      <data>010010.. 0x.. 0x.. ......00 </data> <!-- B xxxxx -->
+    </prepatterns>
+    <postpatterns>
+      <data>10010100 00100001 11...... .....000 </data>             <!-- STWU r1,xx(r1) -->
+      <data>0x7c2c0b78 0x38 0x21 ........ ........ 0x91810000 </data> <!--  or r12,r1,r1; stw r12,0x0(r1) -->
+      <codeboundary />              <!-- it is at least code -->
+      <possiblefuncstart/>
+    </postpatterns>
+  </patternpairs>
+  <patternpairs totalbits="32" postbits="16">
+    <prepatterns>
+      <data>010010.. 0x.. 0x.. ......00 </data> <!-- B xxxxx -->
+    </prepatterns>
+    <postpatterns>
+     <data>10010100 00100001 11...... .....000             011111.. ...01000 00000010 10100110 </data> <!-- STWU r1,xx(r1); MFSPR rx,lr -->
+     <data>10010100 00100001 11...... .....000  0x........ 011111.. ...01000 00000010 10100110 </data> <!-- STWU r1,xx(r1); xxx_instr; MFSPR rx,lr -->
+     <data>10010100 00100001 11...... .....000  0x........ 0x........ 011111.. ...01000 00000010 10100110 </data> <!-- STWU r1,xx(r1); xxx_instr; xxx_instr; MFSPR rx,lr -->
+     <data>0x7c2c0b78 0x38 0x21 ........ ........ 0x91810000 </data> <!--  or r12,r1,r1; stw r12,0x0(r1) -->
+     <codeboundary />              <!-- it is at least code -->
+     <possiblefuncstart/>
+    </postpatterns>
+  </patternpairs>
+  <patternpairs totalbits="32" postbits="16"> <!-- archinfo pattern pairs-->
+    <prepatterns>
+      <data>0x4e800020</data> <!-- blr -->
+    </prepatterns>
+    <postpatterns>
+      <data>0x7c0802a6</data> <!-- mflr r0 -->
+      <data>0xf861 0x.. 0x..</data> <!-- std r3, -off(r1) -->
+    </postpatterns>
+   </patternpairs>
+   <patternpairs totalbits="32" postbits="16"> <!-- VLE pattern pairs -->
+    <prepatterns>
+        <data>0111100. ........ ........ .......0</data><!-- e_b -->
+        <data>0x00 0x04</data> <!-- se_blr -->
+        <data>0xe8 ........</data> <!-- se_b -->
+    </prepatterns>
+    <postpatterns>
+       <data>0x18 0x21 0x06 1...0000 0x00 0x80</data> <!-- e.stwu(r1,xx(r1); se.mflr(r0))-->
+       <data>0x18 0x21 0x06 1...0000</data> <!-- e.stwu(r1,xx(r1); (More permissive than previous one.)-->
+       <funcstart/>
+    </postpatterns>
+  </patternpairs>
+</patternlist>

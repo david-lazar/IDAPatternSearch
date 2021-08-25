@@ -1,0 +1,30 @@
+<patternpairs totalbits="32" postbits="16">  <!-- 32 bit ARM -->
+    <prepatterns>
+      <data>0xe12fff1.                  </data> <!-- bx r? -->
+      <data>0xe12fff1e 0x46c0           </data> <!-- bx lr , filler -->
+      <data>0xe12fff1e 0xe1a00000       </data> <!-- bx lr , filler -->
+      <data>0xea......                  </data> <!-- b xxxx  probably a shared call return, careful with this, must be a really strong func start after -->
+      <data>0xe8 10.11101  10.0.... 0x.. </data> <!-- ldmia   sp!,{pc,...} -->
+      <data>0xe4 0x9d 0xf0 0x08         </data> <!-- ldr     pc,[sp],#0x8 -->
+      <data>0xe1 0xa0 0xf0 0x0e         </data> <!-- mov     pc,lr -->
+      <data>0xe320f000 0xe1a00000        </data> <!-- nop, cpy r0,r0 -->
+      <data>0xe1a00000                  </data> <!-- cpy r0,r0 --> 
+    </prepatterns>
+    
+    <postpatterns>
+      <data> 0xe24dd...                              11101001 00101101 .1...... ....0000  </data> <!-- sub sp,sp ; stmdb sp!,{r4+,lr} -->
+      <data> 11101001 00101101 .1...... ....0000     0xe24dd...                           </data> <!--  stmdb sp!,{r4+,lr}; sub sp,sp -->
+      <data> 11101001 00101101 .1...... ....0000     0x........ 0xe24dd...                </data> <!--  stmdb sp!,{r4+,lr}; <instr>; sub sp,sp -->
+      <data> 11101001 00101101 .1...... ....0000     0xe1a0 010.0000 0000000.             </data> <!--  stmdb sp!,{r4+,lr}; mov r4,r0 -->
+      <data> 11101001 00101101 .1...... ....0000                                          </data> <!--  stmdb sp!,{r4+,lr}; if the prepattern is strong -->
+      <data> 0xe24dd...                              11100101 00101101 1110.... ........  </data> <!--  sub sp,sp;  str lr,[sp,#...]; -->
+      <data> 11101001 00101101 .0...... ........     11100101 00101101 11100000 ......00  </data> <!--  stmdb sp!,{xxx !lr};  str lr,[sp,#...]; -->
+      <data> 11100101 00101101 1110.... ........     0xe24dd...                           </data> <!--  str lr,[sp,#...]; sub sp,sp;   -->
+      <data> 11100101 00101101 1110.... ........     0x........    0xe24dd...             </data> <!--  str lr,[sp,#...]; <instr>; sub sp,sp;   -->
+      <data> 0xe5 0x2d 0xe0 0x08                                                          </data> <!--  str lr,[sp,#-0x8] -->
+      <data> 0xe1a0c00d                              0xe92d....                          </data> <!--  cpy ip,sp; stmdb  sp!,{} -->
+      <align mark="0" bits="3"/>
+      <setcontext name="TMode" value="0"/>
+      <funcstart/>
+    </postpatterns>
+  </patternpairs>

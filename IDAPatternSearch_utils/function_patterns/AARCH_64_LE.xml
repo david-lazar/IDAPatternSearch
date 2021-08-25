@@ -1,0 +1,20 @@
+<patternpairs totalbits="32" postbits="16">  <!-- AARCH64 -->
+	<prepatterns>
+	  <data>0xc0 0x03 0x5f 0xd6                  </data> <!-- ret -->
+	  <data>0xff 0x0f 0x5f 0xd6                  </data> <!-- retab -->
+	  <data> ........ ........ ........ 000101.. </data> <!-- b <xxx>  shared jump call -->
+	  <data> 0x20 0x00 0x20 0xd4                 </data> <!-- brk #1 -->
+	</prepatterns>
+
+	<postpatterns>
+	  <data> 0xfd 0x7b 0xbf 0xa9 </data>  <!--  stp x29, x30, [sp, #-0x10]!  -->
+	  <data> 0xfe .0001111 0x1. 0xf8 </data>  <!--  stp x30, [sp, #-0x..0]!  -->
+	  <data> 111..... .1....11 10...... 0xa9 </data>  <!-- stp x, x, [sp, -0x.0]! -->
+	  <data> 11101..1 001..011 1011.... 0x6d </data>  <!-- stp d, d, [sp, -0x.0]! -->
+	  <data> 0xff ..000011 000..... 0xd1 </data> <!-- sub sp, sp, #... -->
+	  <data> 0x7f 0x23 0x03 0xd5 </data>  <!--  pacibsp  -->
+	  <data> 0x11 .......0 100..... 0xd2 0xff 0x63 0x31 0xcb </data> <!-- mov:4(x17,#0x..)  sub:4(sp,sp,x17) -->
+	  <codeboundary/>
+	  <possiblefuncstart/>
+	</postpatterns>
+</patternpairs>
