@@ -2,7 +2,7 @@
 ### by [Argus Cyber Security Ltd.](https://argus-sec.com/)
 The _IDA Pattern Search_ plugin adds a capability of finding functions according to bit-patterns into the well-known IDA Pro disassembler based on Ghidra’s function patterns format. Using this plugin, it is possible to define new patterns according to the appropriate CPU architecture and analyze the target binary to find and define new functions in it.
 
-For more detailed information, check out our [blog post](https://argus-sec.com/) about this plugin.
+For more detailed information, including Ghidra's format for bit-patterns and how to generate new patterns, check out our [blog post](https://argus-sec.com/using-bitfield-patterns-to-identify-functions-in-binaries/) about this plugin.
 
 ## Usage
 
